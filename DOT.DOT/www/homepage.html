@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+	<title>Homepage</title>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="layout.css" rel="stylesheet" style="" type="text/css" />
+
+<script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
+		<script src="libs/jquery.animate-enhanced.js"></script>
+			<script type="text/javascript" src="iscroll.js"></script>
+		<script src="libs/noClickDelay.js"></script>
+		
+<script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+
+
+
+		<link rel="stylesheet" href="slidingview/slidingview.css" type="text/css" />
+		<script src="slidingview/slidingview.js"></script>
+		
+	<script>
+	var status=0;
+  	var searchResWord=[];
+	var searchResexplanation1=[];
+	var searchReswordid=[];
+	var searchResrowIcon=[];
+	var searchRessub=[];
+	var searchResimage1=[];
+	var searchRessound=[];
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('wrapper');
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+/* * * * * * * *
+ *
+ * Use this for high compatibility (iDevice + Android)
+ *
+ */
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+
+function searchXML(){
+
+
+if($('#input').val()==' ' || $('#input').val()==''){
+alert("Please enter something to search");
+
+} else{
+
+
+
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/lgmo6idak548q5f/Greetings.xml",
+    dataType: "xml",
+    success: parseXml1
+  });  
+  
+   $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/3avubz6hal707ky/Trains.xml",
+    dataType: "xml",
+    success: parseXml2
+  });
+  
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/zkvlym6ia0hvvbb/Food.xml",
+    dataType: "xml",
+    success: parseXml3
+  });
+  
+  
+   $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/6fom96k966t5vqp/Attractions.xml",
+    dataType: "xml",
+    success: parseXml4
+  }); 
+  
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/44g39iy23dp4ecd/Acronym.xml",
+    dataType: "xml",
+    success: parseXml5
+  });
+  
+    $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/wq4sopbrtiq2j0w/Beverages.xml",
+    dataType: "xml",
+    success: parseXml6
+  });
+  
+  }
+  
+  }
+
+  function parseXml1(xml)
+{
+
+  //find every words and print the word
+ 
+  $(xml).find("Words").each(function()
+  {
+
+var word= $(this).find("Word").text();
+var explanation1 = $(this).find("Explanation1").text();
+var wordid= $(this).find("WordID").text();
+var rowIcon=$(this).find("icon").text();
+var sub=$(this).find("SubCatg").text();
+var image1=$(this).find("image1").text();
+var sound=$(this).find("PronouciationClip").text();
+var input = $('#input').val().toLowerCase();
+var  size = input.length;
+
+if(input==word.toLowerCase().substring(0,size)){
+searchResWord.push(word);
+if(explanation1==" "){
+searchResexplanation1.push('No explanation at the moment');
+}
+else{
+searchResexplanation1.push(explanation1);
+}
+searchReswordid.push(wordid);
+searchResrowIcon.push(rowIcon);
+searchRessub.push(sub);
+searchResimage1.push(image1);
+searchRessound.push(sound);
+
+}
+
+  });
+    status++;
+  if( status = 6){
+  toggleOverlay();
+  }
+  
+}
+  function parseXml2(xml)
+{ 
+  //find every words and print the word
+  $(xml).find("Words").each(function()
+  {
+var word= $(this).find("Word").text();
+var explanation1 = $(this).find("Explanation1").text();
+var wordid= $(this).find("WordID").text();
+var rowIcon=$(this).find("icon").text();
+var sub=$(this).find("SubCatg").text();
+var image1=$(this).find("image1").text();
+var sound=$(this).find("PronouciationClip").text();
+
+var input = $('#input').val().toLowerCase();
+var  size = input.length;
+
+if(input==word.toLowerCase().substring(0,size)){
+searchResWord.push(word);
+if(explanation1==" "){
+searchResexplanation1.push('No explanation at the moment');
+}
+else{
+searchResexplanation1.push(explanation1);
+}
+searchReswordid.push(wordid);
+searchResrowIcon.push(rowIcon);
+searchRessub.push(sub);
+searchResimage1.push(image1);
+searchRessound.push(sound);
+
+}
+
+  });
+  status++;
+  if( status = 6){
+  toggleOverlay();
+  }
+}
+  function parseXml3(xml)
+{ 
+  //find every words and print the word
+  $(xml).find("Words").each(function()
+  {
+var word= $(this).find("Word").text();
+var explanation1 = $(this).find("Explanation1").text();
+var wordid= $(this).find("WordID").text();
+var rowIcon=$(this).find("icon").text();
+var sub=$(this).find("SubCatg").text();
+var image1=$(this).find("image1").text();
+var sound=$(this).find("PronouciationClip").text();
+
+var input = $('#input').val().toLowerCase();
+var  size = input.length;
+
+if(input==word.toLowerCase().substring(0,size)){
+searchResWord.push(word);
+searchResexplanation1.push(explanation1);
+searchReswordid.push(wordid);
+searchResrowIcon.push(rowIcon);
+searchRessub.push(sub);
+searchResimage1.push(image1);
+searchRessound.push(sound);
+
+}
+
+  });
+  
+  status++;
+  if( status = 6){
+  toggleOverlay();
+  }
+}
+  function parseXml4(xml)
+{ 
+  //find every words and print the word
+  $(xml).find("Words").each(function()
+  {
+var word= $(this).find("Word").text();
+var explanation1 = $(this).find("Explanation1").text();
+var wordid= $(this).find("WordID").text();
+var rowIcon=$(this).find("icon").text();
+var sub=$(this).find("SubCatg").text();
+var image1=$(this).find("image1").text();
+var sound=$(this).find("PronouciationClip").text();
+
+var input = $('#input').val().toLowerCase();
+var  size = input.length;
+
+if(input==word.toLowerCase().substring(0,size)){
+searchResWord.push(word);
+if(explanation1==" "){
+searchResexplanation1.push('No explanation at the moment');
+}
+else{
+searchResexplanation1.push(explanation1);
+}
+searchReswordid.push(wordid);
+searchResrowIcon.push(rowIcon);
+searchRessub.push(sub);
+searchResimage1.push(image1);
+searchRessound.push(sound);
+
+}
+
+  });
+  status++;
+  if( status = 6){
+  toggleOverlay();
+  }
+}
+  function parseXml5(xml)
+{ 
+  //find every words and print the word
+  $(xml).find("Words").each(function()
+  {
+var word= $(this).find("Word").text();
+var explanation1 = $(this).find("Explanation1").text();
+var wordid= $(this).find("WordID").text();
+var rowIcon=$(this).find("icon").text();
+var sub=$(this).find("SubCatg").text();
+var image1=$(this).find("image1").text();
+var sound=$(this).find("PronouciationClip").text();
+
+var input =$('#input').val();
+var  size = input.length;
+
+if(input==word.toLowerCase().substring(0,size)){
+searchResWord.push(word);
+if(explanation1==" "){
+searchResexplanation1.push('No explanation at the moment');
+}
+else{
+searchResexplanation1.push(explanation1);
+}
+searchReswordid.push(wordid);
+searchResrowIcon.push(rowIcon);
+searchRessub.push(sub);
+searchResimage1.push(image1);
+searchRessound.push(sound);
+
+}
+
+  });
+  status++;
+  if( status = 6){
+  toggleOverlay();
+  }
+
+}
+  function parseXml6(xml)
+{
+  //find every words and print the word
+  $(xml).find("Words").each(function()
+  {
+var word= $(this).find("Word").text();
+var explanation1 = $(this).find("Explanation1").text();
+var wordid= $(this).find("WordID").text();
+var rowIcon=$(this).find("icon").text();
+var sub=$(this).find("SubCatg").text();
+var image1=$(this).find("image1").text();
+var sound=$(this).find("PronouciationClip").text();
+
+var input = $('#input').val().toLowerCase();
+var  size = input.length;
+
+if(input==word.toLowerCase().substring(0,size)){
+searchResWord.push(word);
+if(explanation1==" "){
+searchResexplanation1.push('No explanation at the moment');
+}
+else{
+searchResexplanation1.push(explanation1);
+}
+
+searchReswordid.push(wordid);
+searchResrowIcon.push(rowIcon);
+searchRessub.push(sub);
+searchResimage1.push(image1);
+searchRessound.push(sound);
+
+}
+
+  });
+  
+  status++;
+  if( status = 6){
+  toggleOverlay();
+  }
+}
+
+function toggleOverlay(){
+
+
+	var overlay = document.getElementById('overlay1');
+	var specialBox = document.getElementById('specialBox1');
+	
+	$(".myTable").empty();
+	
+	for(var x=0;x<searchResWord.length;x++){
+$(".myTable").append('<tr><th>'+searchResWord[x]+'</th></tr><tr><td>'+searchResexplanation1[x]+'</td><tr>');
+  	    //  $(".myTable").append('<tr><td><img src="' +searchResrowIcon[x]+'" title="'+searchRessub[x]+'" height="68" width="66" /></td><td class="setFixwidth"><div class="flip'+searchReswordid[x]+'">'+searchResWord[x]+ '</div></td><td><button onclick="playAudio(&#39;'+sound+'&#39;)"><img src="image/11.png"/></button></td><td><button onclick="insertRecord(&#39;'+searchReswordid[x]+'&#39; , &#39;'+searchResWord[x]+'&#39; , &#39;'+searchResrowIcon[x]+'&#39; , &#39;'+searchResexplanation1[x]+'&#39; , &#39;'+searchResimage1+'&#39; , &#39;'+searchRessub[x]+'&#39;)"><img src="image/1.png" /></button></td></tr>');
+       //  $(".myTable").append('<tr><td colspan="4"><div class="panel'+searchReswordid[x]+'"><h3><img src="'+searchResimage1[x]+'" title="'+searchRessub[0]+'" height="30%" width="30%" alt=" "/></h3><br/><p>'+explanation1+'<br/><br/><img src="image/sharebtn.png" /><img src="image/copybtn.png" /></p></td></tr></table>');
+         	//$(".myTable").append('<script>$(".flip'+ searchReswordid[x] +'").click(function(){'+'$(".panel'+ searchReswordid[x] +'").slideToggle("slow",function(){;myScroll.refresh();})});'+'</'+'script>');
+	//$(".myTable").append('<style> .panel'+ searchReswordid[x] +',.flip'+ searchReswordid[x] + '{text-align:center; position:relative;} .panel'+searchReswordid[x]+'{display:none; position:relative;} .panel'+searchReswordid[x]+' img{float: left; padding-left:10px;}</style>');
+}  myScroll.refresh();
+   myScroll.scrollTo(0, 0, 200,false);
+	overlay.style.opacity =0.8;
+	
+		overlay.style.display = "block";
+		specialBox.style.display = "block";
+	
+}
+
+function closeSearch(){
+var overlay = document.getElementById('overlay1');
+	var specialBox = document.getElementById('specialBox1');
+		overlay.style.display = "none";
+		specialBox.style.display = "none";
+	
+}
+</script>
+		
+		<script>
+
+			$(document).ready( function() {
+
+				//Setup the ViewNavigator
+				new SlidingView( 'sidebar', 'body' );
+			} );
+			
+		</script>
+		
+		<style>
+		.myTable{
+		clear:both;
+		margin: 2%;
+		
+		
+		}
+	
+th{
+text-align:left;
+}
+		
+			#sidebar {
+				background-color: #f56052;
+				padding:10px;
+			}
+			#body {
+				background-color: white;
+				padding:10px;
+			}
+
+/*buttons*/			
+			
+/*yellow button*/			
+			#yellow {
+	position: absolute;
+	left: 0%;
+	bottom: 24%;
+	}
+			
+/*blue button*/
+			#blue {
+	position: absolute;
+	right: 4%;
+	bottom: 25%;
+	}
+	
+/*pink button*/
+			#pink {
+	position: absolute;
+	right: 27%;
+	top: 18%;			
+	}
+		
+input[type="text"]{
+    margin:30px 0 0;
+    width: 70%;
+    color:#000000;
+    font-size:12px;
+    font-style:italic;
+    border:1px solid #cccccc;
+    border-right:none;
+    background-color:#ededed;
+    float:left;
+    height:28px;
+    padding-right: 7px;
+    padding-left: 7px;
+    line-height: 28px;
+}
+
+#btn_Search{
+    background: url(image/search.png) -99px 0px  no-repeat;
+    width:30px;
+    height:30px;
+    border:none;
+    float:left;
+    margin:30px 0 0;
+    cursor:pointer;
+}
+		div#overlay1 {
+	display: none;
+	z-index: 2;
+	background: #000;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+}
+div#specialBox1 {
+	display: none;
+	position: relative;
+	z-index: 3;
+	margin: 50px auto 0px auto;
+	width: 80%; 
+
+	height: 80%;
+	background: #FFF;
+	color: #000;
+}
+div#wrapper1 {
+	position:absolute;
+	top: 0px;
+	left: 0px;
+	padding-left:24px;
+}
+
+
+#SRTitle{
+margin-left:10px;
+margin-top:5px;
+font-size:1em;
+float:left;
+text-align:center;
+}
+
+#close{
+float:right;
+background:#e74c3c;}
+
+
+#wrapper {
+	position:absolute; z-index:1;
+	top:50px; bottom:0px; left:0;
+	width:100%;
+	overflow-x:hidden;
+}
+
+#scroller {
+	position:absolute; z-index:1;
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	width:100%;
+	padding:0;
+}
+
+		</style>
+
+	</head>
+	<body>	
+			    <div id="overlay1"></div>
+			<div id="specialBox1">
+  <p id="SRTitle"><b>Search Result</b></p>   <button id="close" onclick="closeSearch()">Close Search Window</button>
+  <div id="wrapper">	  
+  <div id="scroller">
+  <table class="myTable">
+
+</table>
+</div>
+</div>
+  
+</div>
+
+<div id="wrapper1">
+</div>
+		<div class="slidingview_wrapper">
+			<div id="sidebar">
+
+Search: <input type="text" name="wordsearch" id="input">
+<br />
+<button type="submit" id="btn_Search" onclick="searchXML()"></button>
+<br />
+<br />
+<div id="results">
+</div>
+		
+	</div>
+			<div id="body">
+			
+	
+			<ul id="header">
+			<li><a href ="homepage.html">
+			<img class="logo" src="image/logo.png" alt="dot.dotlogo"></a></li>
+			<li class="name">Homepage</li>
+			
+			<li><a href="setting.html"><img class="settingbtn" src="image/settingbtn.png" alt="Setting" width="30px" height="30px"/></a></li>
+			<li><a href="fav.html"><img class="Favbtn" src="image/1.png" alt="FAV"/></a></li>
+		    </ul>
+
+	
+	<a href ="LWR.html">
+	<img src="image/words.png" id="yellow" alt ="yellowbtn" width="50%" height="30%" class="yellow"/>
+</a>
+
+	
+<div>
+	<a href ="errorpage.html">
+	<img src ="image/ocr.png" id="blue" alt="bluebtn" width ="48%" height=" 30%"/>	
+</a>
+	
+</div>	
+
+<div>
+	<a href ="dictionary.html">
+	<img src ="image/dictionary.png" id="pink" alt="pinkbtn" width ="50%" height=" 32%"/>	
+</a>
+	
+</div>	
+		</div>
+		</div>
+		
+
+		    
+	</body>
+</html>

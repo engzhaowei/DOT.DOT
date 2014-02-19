@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<meta http-equiv="refresh" content="6; url=homepage.html">
+	<title>Homepage</title>
+	<script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="SQLitePlugin.js"></script>
+	<script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
+	<head>
+		<script>
+			var n = new Date();
+			var month = new Array();
+			month[0] = "January";
+			month[1] = "February";
+			month[2] = "March";
+			month[3] = "April";
+			month[4] = "May";
+			month[5] = "June";
+			month[6] = "July";
+			month[7] = "August";
+			month[8] = "September";
+			month[9] = "October";
+			month[10] = "November";
+			month[11] = "December";
+			var m = month[n.getMonth()];
+			var d = n.getDate();
+			
+
+
+function searchWord(tx) {
+    tx.executeSql(("SELECT * FROM History_facts WHERE Month=" +"'"+ m +"'"+ " and Date ="+"'"+ d+"'"), [], querySuccess, errorCB);
+}
+
+function querySuccess(tx, results) {
+    var len = results.rows.length;
+    console.log("DEMO table: " + len + " rows found.");
+    var list = $("<p/>");
+    for (var i=0; i<len; i++){
+        $(list).append($("<p/>", {text:results.rows.item(i).Daily_History}));
+    }
+
+    if (len === 0) {
+        $(list).append($("<li/>", {text: "No results were found"}));
+    }
+
+    $("#Facts").empty();
+    list.appendTo("#Facts");
+}
+
+function errorCB(err) {
+    alert("Error processing SQL: "+err.code);
+}
+
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+	var db = window.sqlitePlugin.openDatabase("Databases", "1.0", "DOT", 1000000);
+	
+		db.transaction(function(tx) {
+                    searchWord(tx);
+                }, errorCB);
+                
+                
+                
+              document.getElementById('month').innerHTML = month[n.getMonth()];  
+               document.getElementById('date').innerHTML = n.getDate(); 
+	};
+
+
+		</script>
+		<style>
+			#hex {
+padding-top: 30%;
+			}
+
+			.loading {
+				padding-top: 40%;
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+
+			.Dline {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			
+#date{
+
+	font-family: coolvetica;
+	font-size: 1.6em;
+	font-weight:bold;
+	padding-top:15%;
+	text-align: center;
+	left: 3.75%;
+	margin: auto;
+
+	
+}
+
+#month{
+
+	font-family: coolvetica;
+	margin: auto;
+	font-size: 1.4em;
+	padding-top:8%;
+	text-align: center;
+	left: 3.75%;
+}
+
+#Facts{
+	left: 10%;
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	font-size: 1.3em;
+
+	
+}
+
+		</style>
+
+	</head>
+
+	<body>
+
+		<table>
+			<div id="hex">
+
+				<tr>
+					<td>
+					<br/><br/><br/>
+<div style="background-image:url(image/Hex.png); width:120px;height:200px; background-repeat: no-repeat;">
+<div id="date"></div>
+<div id="month"></div>
+			</div>	
+</div></td>
+					
+					<td>
+					<div id="Facts" name="Facts">
+
+
+					</div></td>
+				</tr>
+
+			
+		</table>
+
+
+		<img class="loading" src="image/loading.gif"/>
+		<img class="Dline" src="image/dline.png"/>
+
+	</body>
+</html>

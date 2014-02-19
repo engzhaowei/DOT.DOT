@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+	<title>Homepage</title>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="layout.css" rel="stylesheet" style="" type="text/css" />
+
+		<script src="libs/jquery-1.7.1.js"></script>
+		<script src="libs/jquery.animate-enhanced.js"></script>
+		<script src="libs/iscroll.js"></script>
+		<script src="libs/noClickDelay.js"></script>
+		
+<script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+<script type="text/javascript" charset="utf-8" src="SQLitePlugin.js"></script>
+<script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
+
+		<link rel="stylesheet" href="slidingview/slidingview.css" type="text/css" />
+		<script src="slidingview/slidingview.js"></script>
+		
+		<script>
+
+			$(document).ready( function() {
+
+				//Setup the ViewNavigator
+				new SlidingView( 'sidebar', 'body' );
+			} );
+			
+		</script>
+		<style>
+			#sidebar {
+				background-color: #f56052;
+				padding:10px;
+			}
+			#body {
+				background-color: white;
+				padding:10px;
+			}
+
+/*buttons*/			
+			
+/*yellow button*/			
+			#yellow {
+	position: absolute;
+	left: 3%;
+	top: 15%;
+	}
+			
+/*green button*/
+			#green {
+	position: absolute;
+	left: 53%;
+	top: 19%;
+	}
+
+
+/*purple button*/
+			#purple {
+	position: absolute;
+	left: 8%;
+	top: 45%;
+	}
+	
+
+/*orange button*/
+			#orange {
+	position: absolute;
+	right: 9%;
+	top: 39%;
+	}
+		
+
+/*blue button*/
+			#blue {
+	position: absolute;
+	left: 5%;
+	bottom: 3%;
+	}
+	
+
+/*pink button*/
+			#pink {
+	position: absolute;
+	right: 9%;
+	bottom: 9%;			
+	}
+		
+/*end of buttons*/
+
+			input[type="text"]{
+    margin:30px 0 0;
+    width: 70%;
+    color:#000000;
+    font-size:12px;
+    font-style:italic;
+    border:1px solid #cccccc;
+    border-right:none;
+    background-color:#ededed;
+    float:left;
+    height:28px;
+    padding-right: 7px;
+    padding-left: 7px;
+    line-height: 28px;
+}
+
+input[type="submit"]{
+    background: url(image/search.png) -99px 0px  no-repeat;
+    width:30px;
+    height:30px;
+    border:none;
+    float:left;
+    margin:30px 0 0;
+    cursor:pointer;
+}
+		
+		</style>
+
+	</head>
+	<body>	
+		
+		<div class="slidingview_wrapper">
+						<div id="sidebar">
+<form name="input" action="html_form_action.asp" method="get">
+<input type="text"  placeholder="Search here..."  required >
+<input id="btn_Search" type="submit" value="" />
+</form>
+
+
+
+	</div>
+			<div id="body">
+			<ul id="header">
+			<li><a href ="homepage.html">
+			<img class="logo" src="image/logo.png" alt="dot.dotlogo"></a></li>
+			<li class="name">Dictionary</li>
+			
+			<li><a href="setting.html"><img class="settingbtn" src="image/settingbtn.png" alt="Setting" width="30px" height="30px"/></a></li>
+			<li><a href="fav.html"><img class="Favbtn" src="image/1.png" alt="FAV"/></a></li>
+		    </ul>
+		    
+		   
+	<a href="wordlist.html?0">
+	<img src="image/yellowbtn.png" id="yellow" alt ="yellowbtn" width="50%" height="30%" class="yellow"/>
+</a>
+
+<div>
+	<a href="wordlist.html?1">
+	<img src ="image/greenbtn.png" id="green" alt ="greenbtn" width ="35%" height ="21%"/>
+</a></div>	
+	
+<div>
+	<a href="wordlist.html?2">
+	<img src ="image/purplebtn.png" id="purple" alt="purplebtn" width ="39%" height ="24%"/>
+</a></div>	
+	
+<div>
+	<a href="wordlist.html?3">
+	<img src ="image/orangebtn.png" id="orange" alt="orangebtn" width ="45%" height=" 30%"/>	
+</a></div>	
+	
+<div>
+	<a href="wordlist.html?4">
+	<img src ="image/bluebtn.png" id="blue" alt="bluebtn" width ="48%" height=" 30%"/>	
+	</a>
+	
+</div>	
+
+<div>
+	<a href="wordlist.html?5">
+	<img src ="image/pinkbtn.png" id="pink" alt="pinkbtn" width ="39%" height=" 24%"/>	
+</a></div>	
+		</div>
+		</div>
+		
+
+	 
+	</body>
+</html>

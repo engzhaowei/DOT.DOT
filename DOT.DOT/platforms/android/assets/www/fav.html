@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+	<title>Fav Page</title>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="layout.css" rel="stylesheet" style="" type="text/css" />
+			<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+		
+		
+		<script type="text/javascript" src="jquery-1.3.1.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+
+$(document).ready(function (){
+    initDatabase();
+
+
+
+});
+ 
+
+var selectAllStatementGreetings = "SELECT * FROM GreetingsFav";
+ var selectAllStatementFood= "SELECT * FROM FoodFav";
+ var selectAllStatementBeverages= "SELECT * FROM BeveragesFav";
+ var selectAllStatementAcroynm = "SELECT * FROM AcroynmFav";
+ var selectAllStatementTrains= "SELECT * FROM TrainsFav";
+ var selectAllStatementAttractions= "SELECT * FROM AttractionsFav";
+ 
+
+ 
+ 
+ var db = openDatabase("FavouriteDB", "1.0", "FavouriteDB", 200000);  // Open SQLite Database
+ 
+var dataset;
+ 
+var DataType;
+ 
+ function initDatabase()  // Function Call When Page is ready.
+ 
+{
+ 
+    try {
+ 
+        if (!window.openDatabase)  // Check browser is supported SQLite or not.
+ 
+        {
+ 
+            alert('Databases are not supported in this browser.');
+ 
+        }
+ 
+        else {
+ 
+            createTable();  // If supported then call Function for create table in SQLite
+ 
+        }
+ 
+    }
+ 
+    catch (e) {
+ 
+        if (e == 2) {
+ 
+            // Version number mismatch. 
+ 
+            console.log("Invalid database version.");
+ 
+        } else {
+ 
+            console.log("Unknown error " + e + ".");
+ 
+        }
+ 
+        return;
+ 
+    }
+ 
+}
+ 
+function createTable()  // Function for Create Table in SQLite.
+ 
+{
+    db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS TrainsFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+     db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS BeveragesFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+	 db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS GreetingsFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+     db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS AcroynmFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+	  db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS FoodFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+     db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS AttractionsFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+ 
+} 
+
+ 
+  
+function deleteRecord(WordID) // Get id of record . Function Call when Delete Button Click..
+{
+
+switch(WordID.substring(0,2)){
+
+case 'Ac':
+alert('Word is remove from favourite')
+        db.transaction(function (tx) { tx.executeSql('DELETE FROM AcroynmFav WHERE WordID=?', [WordID],onError);	
+		 showRecordsAC();
+		 }); 
+break;
+
+case 'B0':
+             alert('Word is remove from favourite')
+ db.transaction(function (tx) { tx.executeSql('DELETE FROM BeveragesFav WHERE WordID=?', [WordID],onError); 
+				 showRecordsBEV();
+				});
+break;
+
+case 'F0':
+     alert('Word is remove from favourite')
+ db.transaction(function (tx) { tx.executeSql('DELETE FROM FoodFav WHERE WordID=?', [WordID],onError); 		}); 
+ showRecordsFood();
+break;
+
+case 'A0':
+alert('Word is remove from favourite')
+ 
+ db.transaction(function (tx) { tx.executeSql('DELETE FROM AttractionsFav WHERE WordID=?', [WordID],onError); 		}); 
+  showRecordsATT();
+ 
+break;
+
+case 'G0':
+     alert('Word is remove from favourite')
+ db.transaction(function (tx) { tx.executeSql('DELETE FROM GreetingsFav WHERE WordID=?', [WordID],onError); 		}); 
+  showRecordsBEV();
+break;
+
+case 'T0':
+       alert('Word is remove from favourite')
+ db.transaction(function (tx) { tx.executeSql('DELETE FROM TrainsFav WHERE WordID=?', [WordID],onError); 		}); 
+ showRecordsTrains();
+break;
+default:
+  alert('Fail to remove from favourite');
+  break;
+}
+
+
+
+
+
+   
+ 
+ 
+}
+ 
+
+ 
+ 
+function onError(tx, error) // Function for Hendeling Error...
+ 
+{
+ 
+    //alert(error.message);
+ 
+}
+ 
+ function showRecordsFood() // Function For Retrive data from Database Display records as list
+ 
+{
+ $(".FOODfav").html('')
+ 
+    db.transaction(function (tx) {
+ 
+        tx.executeSql('SELECT * FROM FoodFav', [], function (tx, result) {
+ 
+            dataset = result.rows;
+ 
+            for (var i = 0, item = null; i < result.rows.length; i++) {
+ 
+                item = result.rows.item(i);
+				
+
+
+   	$(".FOODfav").append('<tr><td><img src="'+item.rowIcon+'" title="'+item.sub+'" height="68" width="66" /></td><td><div class="flip'+item.WordID+'"><br><br><h2>'+item.Word+ '</h2></div><br><div><p class="panel'+item.WordID+'">'+'<img src="'+item.image1+'" title="'+item.sub+'"  height="70%" width="70%" alt=" "/><br>'+ item.explanation1 +'</p><br></div></td><td><img src="image/11.png" /></td><td><button onclick="deleteRecord(&#39;'+item.WordID+'&#39;)"><img src="image/1.png" /></button></td></tr><br/><br/>');
+        $(".FOODfav").append('<script type="text/javascript">$(".flip' + item.WordID + '").click(function(){' + '$(".panel' + item.WordID + '").slideToggle("slow");});' + '</' + 'script>');
+        $(".FOODfav").append('<style type="text/javascript">.panel' + item.WordID + ',.flip' + item.WordID + '{text-align:center; position:relative;} .panel' + item.WordID + '{display:none; position:relative;}</style>');
+
+ 
+            }
+ 
+        });
+ 
+    });
+ }
+ 
+  function showRecordsTrains() // Function For Retrive data from Database Display records as list
+ 
+{
+ $(".Tfav").html('')
+ 
+    db.transaction(function (tx) {
+ 
+        tx.executeSql('SELECT * FROM TrainsFav', [], function (tx, result) {
+ 
+            dataset = result.rows;
+ 
+            for (var i = 0, item = null; i < result.rows.length; i++) {
+ 
+                item = result.rows.item(i);
+				
+
+
+   	$(".Tfav").append('<tr><td><img src="'+item.rowIcon+'" title="'+item.sub+'" height="68" width="66" /></td><td><div class="flip'+item.WordID+'"><br><br><h2>'+item.Word+ '</h2></div><br><div><p class="panel'+item.WordID+'">'+'<img src="'+item.image1+'" title="'+item.sub+'"  height="70%" width="70%" alt=" "/><br>'+ item.explanation1 +'</p><br></div></td><td><img src="image/11.png" /></td><td><button onclick="deleteRecord(&#39;'+item.WordID+'&#39;)"><img src="image/1.png" /></button></td></tr><br/><br/>');
+        $(".Tfav").append('<script type="text/javascript">$(".flip' + item.WordID + '").click(function(){' + '$(".panel' + item.WordID + '").slideToggle("slow");});' + '</' + 'script>');
+        $(".Tfav").append('<style type="text/javascript">.panel' + item.WordID + ',.flip' + item.WordID + '{text-align:center; position:relative;} .panel' + item.WordID + '{display:none; position:relative;}</style>');
+
+ 
+            }
+ 
+        });
+ 
+    });
+ }
+ 
+   function showRecordsBEV() // Function For Retrive data from Database Display records as list
+ 
+{
+ $(".BEVfav").html('')
+ 
+    db.transaction(function (tx) {
+ 
+        tx.executeSql('SELECT * FROM BeveragesFav', [], function (tx, result) {
+ 
+            dataset = result.rows;
+ 
+            for (var i = 0, item = null; i < result.rows.length; i++) {
+ 
+                item = result.rows.item(i);
+				
+
+
+   	$(".BEVfav").append('<tr><td><img src="'+item.rowIcon+'" title="'+item.sub+'" height="68" width="66" /></td><td><div class="flip'+item.WordID+'"><br><br><h2>'+item.Word+ '</h2></div><br><div><p class="panel'+item.WordID+'">'+'<img src="'+item.image1+'" title="'+item.sub+'"  height="70%" width="70%" alt=" "/><br>'+ item.explanation1 +'</p><br></div></td><td><img src="image/11.png" /></td><td><button onclick="deleteRecord(&#39;'+item.WordID+'&#39;)"><img src="image/1.png" /></button></td></tr><br/><br/>');
+        $(".BEVfav").append('<script type="text/javascript">$(".flip' + item.WordID + '").click(function(){' + '$(".panel' + item.WordID + '").slideToggle("slow");});' + '</' + 'script>');
+        $(".BEVfav").append('<style type="text/javascript">.panel' + item.WordID + ',.flip' + item.WordID + '{text-align:center; position:relative;} .panel' + item.WordID + '{display:none; position:relative;}</style>');
+
+ 
+            }
+ 
+        });
+ 
+    });
+ }
+ 
+ function showRecordsGR() // Function For Retrive data from Database Display records as list
+ 
+{
+ $(".GRfav").html('')
+ 
+    db.transaction(function (tx) {
+ 
+        tx.executeSql('SELECT * FROM GreetingsFav', [], function (tx, result) {
+ 
+            dataset = result.rows;
+ 
+            for (var i = 0, item = null; i < result.rows.length; i++) {
+ 
+                item = result.rows.item(i);
+				
+
+
+   	$(".GRfav").append('<tr><td><img src="'+item.rowIcon+'" title="'+item.sub+'" height="68" width="66" /></td><td><div class="flip'+item.WordID+'"><br><br><h2>'+item.Word+ '</h2></div><br><div><p class="panel'+item.WordID+'">'+'<img src="'+item.image1+'" title="'+item.sub+'"  height="70%" width="70%" alt=" "/><br>'+ item.explanation1 +'</p><br></div></td><td><img src="image/11.png" /></td><td><button onclick="deleteRecord(&#39;'+item.WordID+'&#39;)"><img src="image/1.png" /></button></td></tr><br/><br/>');
+        $(".GRfav").append('<script type="text/javascript">$(".flip' + item.WordID + '").click(function(){' + '$(".panel' + item.WordID + '").slideToggle("slow");});' + '</' + 'script>');
+        $(".GRfav").append('<style type="text/javascript">.panel' + item.WordID + ',.flip' + item.WordID + '{text-align:center; position:relative;} .panel' + item.WordID + '{display:none; position:relative;}</style>');
+
+ 
+            }
+ 
+        });
+ 
+    });
+ }
+ 
+    function showRecordsAC() // Function For Retrive data from Database Display records as list
+ 
+{
+ $(".ACfav").html('')
+ 
+    db.transaction(function (tx) {
+ 
+        tx.executeSql('SELECT * FROM AcroynmFav', [], function (tx, result) {
+ 
+            dataset = result.rows;
+ 
+            for (var i = 0, item = null; i < result.rows.length; i++) {
+ 
+                item = result.rows.item(i);
+				
+
+
+   	$(".ACfav").append('<tr><td><img src="'+item.rowIcon+'" title="'+item.sub+'" height="68" width="66" /></td><td><div class="flip'+item.WordID+'"><br><br><h2>'+item.Word+ '</h2></div><br><div><p class="panel'+item.WordID+'">'+'<img src="'+item.image1+'" title="'+item.sub+'"  height="70%" width="70%" alt=" "/><br>'+ item.explanation1 +'</p><br></div></td><td><img src="image/11.png" /></td><td><button onclick="deleteRecord(&#39;'+item.WordID+'&#39;)"><img src="image/1.png" /></button></td></tr><br/><br/>');
+        $(".ACfav").append('<script type="text/javascript">$(".flip' + item.WordID + '").click(function(){' + '$(".panel' + item.WordID + '").slideToggle("slow");});' + '</' + 'script>');
+        $(".ACfav").append('<style type="text/javascript">.panel' + item.WordID + ',.flip' + item.WordID + '{text-align:center; position:relative;} .panel' + item.WordID + '{display:none; position:relative;}</style>');
+
+ 
+            }
+ 
+        });
+ 
+    });
+ }
+ 
+ function showRecordsATT() // Function For Retrive data from Database Display records as list
+ 
+{
+ $(".ATTfav").html('')
+ 
+    db.transaction(function (tx) {
+ 
+        tx.executeSql('SELECT * FROM AttractionsFav', [], function (tx, result) {
+ 
+            dataset = result.rows;
+ 
+            for (var i = 0, item = null; i < result.rows.length; i++) {
+ 
+                item = result.rows.item(i);
+				
+
+   	$(".ATTfav").append('<tr><td><img src="'+item.rowIcon+'" title="'+item.sub+'" height="68" width="66" /></td><td><div class="flip'+item.WordID+'"><br><br><h2>'+item.Word+ '</h2></div><br><div><p class="panel'+item.WordID+'">'+'<img src="'+item.image1+'" title="'+item.sub+'"  height="70%" width="70%" alt=" "/><br>'+ item.explanation1 +'</p><br></div></td><td><img src="image/11.png" /></td><td><button onclick="deleteRecord(&#39;'+item.WordID+'&#39;)"><img src="image/1.png" /></button></td></tr><br/><br/>');
+        $(".ATTfav").append('<script type="text/javascript">$(".flip' + item.WordID + '").click(function(){' + '$(".panel' + item.WordID + '").slideToggle("slow");});' + '</' + 'script>');
+        $(".ATTfav").append('<style type="text/javascript">.panel' + item.WordID + ',.flip' + item.WordID + '{text-align:center; position:relative;} .panel' + item.WordID + '{display:none; position:relative;}</style>');
+
+ 
+            }
+ 
+        });
+ 
+    });
+ }
+$(document).ready(function(){
+
+  $("#flip").click(function(){
+    $("#panel").slideToggle("slow");
+  });
+
+  
+   $("#flipa").click(function(){
+    $("#panela").slideToggle("slow");
+  });
+  
+   $("#flipa1").click(function(){
+    $("#panela1").slideToggle("slow");
+  });
+  
+    $("#flip1").click(function(){
+    $("#panel1").slideToggle("slow");
+  });
+  
+   $("#flip2").click(function(){
+    $("#panel2").slideToggle("slow");
+  });
+  
+   $("#flip3").click(function(){
+    $("#panel3").slideToggle("slow");
+  });
+  
+    $("#flip4").click(function(){
+    $("#panel4").slideToggle("slow");
+  });
+  
+   $("#flip5").click(function(){
+    $("#panel5").slideToggle("slow");
+  });
+  
+  
+  });
+</script>
+
+<style type="text/css"> 
+img[src=" "] {
+  display:none;
+}
+*{
+-webkit-tap-highlight-color: transparent;
+}
+
+#panel,#flip
+{
+padding:15px;
+text-align:left;
+background-color:#fff599;
+/*border:solid 1px #c0c0c0;*/
+}
+
+#panel
+{
+
+display:none;
+background-color: #FFFFFF;
+}
+
+
+#panela,#flipa
+{
+padding:15px;
+text-align:left;
+background-color:#FFFFFF;
+
+}
+
+#panela
+{
+
+display:none;
+background-color: #FFFFFF;
+
+}
+
+#panela1,#flipa1
+{
+padding:15px;
+text-align:left;
+background-color:#FFFFFF;
+
+}
+
+
+#panela1
+{
+
+display:none;
+background-color: #FFFFFF;
+
+}
+
+
+#panel1,#flip1
+{
+padding:15px;
+text-align:left;
+background-color:#a2fba7;
+
+
+}
+
+#panel1
+{
+
+display:none;
+background-color: #FFFFFF;
+}
+
+
+
+
+#panel2,#flip2
+{
+padding:15px;
+text-align:left;
+background-color:#ffd3fb;
+
+}
+
+
+#panel2
+{
+
+display:none;
+background-color: #FFFFFF;}
+
+
+#panel3,#flip3
+{
+padding:15px;
+text-align:left;
+background-color:#ffca9c;
+
+
+}
+
+#panel3
+{
+
+display:none;
+background-color: #FFFFFF;
+}
+
+
+#panel4,#flip4
+{
+padding:15px;
+text-align:left;
+background-color:#a6dcfd;
+
+
+}
+
+#panel4
+{
+
+display:none;
+background-color: #FFFFFF;
+}
+		
+
+#panel5,#flip5
+{
+padding:15px;
+text-align:left;
+background-color:#ff8688;
+
+
+}
+
+#panel5
+{
+
+display:none;
+background-color: #FFFFFF;
+}
+
+
+
+
+
+table
+{
+border-collapse:collapse;
+
+
+}
+
+table, tr
+{
+
+width: 95%;
+height: 40px;
+margin-left: 1px;
+
+}
+
+
+.logo1{
+
+
+			}
+			
+#box1{
+	padding-top: 10%;
+}	
+
+</style>
+
+
+
+
+</head>
+
+
+<body>
+	
+	
+		<div id="body">
+		<ul id="header">
+			<li><a href ="homepage.html">
+			<img class="logo" src="image/logo.png" alt="dot.dotlogo"></a></li>
+			<li class="name">Favourite</li>
+				
+			<li ><a href="setting.html"><img class="settingbtn" src="image/settingbtn.png" alt="Setting" width="30px" height="30px"/></a></li>
+			<li><a href="fav.html"><img class="Favbtn" src="image/2.png" alt="FAV"/></a></li>
+		    </ul>
+		    
+
+ 
+<div id="box1">
+		<div id="flip" onclick="showRecordsGR()" ><img src="image/Clickme.png" width="25px" height="25px"/>&nbsp; Greetings</div>
+
+<div id="panel">
+
+	
+  <table class="GRfav">
+
+</table>
+</div>
+
+
+
+
+
+
+<br/>
+
+<div id="flip1" onclick="showRecordsAC()"><img src="image/Clickme.png" width="25px" height="25px"/>&nbsp; Acronyms</div>
+<div id="panel1">
+	
+	  <table class="ACfav">
+
+</table>
+	
+</div>
+
+
+<br/>
+
+<div id="flip2" onclick="showRecordsBEV()"><img src="image/Clickme.png" width="25px" height="25px"/>&nbsp; Beverages</div>
+<div id="panel2">
+	
+	  <table class="BEVfav">
+
+</table>
+	
+</div>
+	
+<br/>			
+			
+<div id="flip3" onclick="showRecordsFood()"><img src="image/Clickme.png" width="25px" height="25px"/>&nbsp; Food</div>
+<div id="panel3">
+	
+	  <table class="FOODfav">
+
+</table>
+	
+</div>			
+
+
+<br/>
+
+<div id="flip4" onclick="showRecordsTrains()"><img src="image/Clickme.png" width="25px" height="25px"/>&nbsp; Train</div>
+<div id="panel4">
+		  <table class="Tfav">
+
+</table>
+ 
+	
+</div>					
+			
+<br/>
+			
+<div onclick="showRecordsATT()" id="flip5"><img src="image/Clickme.png" width="25px" height="25px"/>&nbsp; Attractions</div>
+<div  id="panel5">
+	  <table class="ATTfav">
+
+</table>
+       	
+</div>				
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+</body>
+</html>

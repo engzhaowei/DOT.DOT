@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+	<title>Setting</title>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="layout.css" rel="stylesheet" style="" type="text/css" />
+
+		<script src="libs/jquery-1.7.1.js"></script>
+		<script src="libs/jquery.animate-enhanced.js"></script>
+		<script src="libs/iscroll.js"></script>
+		<script src="libs/noClickDelay.js"></script>
+		
+<script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+<script type="text/javascript" charset="utf-8" src="SQLitePlugin.js"></script>
+<script type="text/javascript" charset="utf-8" src="jquery-1.8.2.min.js"></script>
+
+		<link rel="stylesheet" href="slidingview/slidingview.css" type="text/css" />
+		<script src="slidingview/slidingview.js"></script>
+		
+	<script>
+function searchWord(tx, keyword) {
+    var kw = '%' + keyword + '%';
+    tx.executeSql("SELECT * FROM Beverages WHERE col_2 LIKE ?", [kw], querySuccess, errorCB);
+}
+
+function querySuccess(tx, results) {
+    var len = results.rows.length;
+    console.log("DEMO table: " + len + " rows found.");
+    var list = $("<ul/>");
+    for (var i=0; i<len; i++){
+        $(list).append($("<li/>", {text:results.rows.item(i).col_2}));
+    }
+
+    if (len === 0) {
+        $(list).append($("<li/>", {text: "No results were found"}));
+    }
+
+    $("#search-result").empty();
+    list.appendTo("#search-result");
+}
+
+function errorCB(err) {
+    alert("Error processing SQL: "+err.code);
+}
+
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+	var db = window.sqlitePlugin.openDatabase("Databases", "1.0", "DOT", 1000000);
+	$('#btn_Search').click(function() {
+                var keyword = $("input[name=keyword]")[0].value;
+		db.transaction(function(tx) {
+                    searchWord(tx, keyword);
+                }, errorCB);
+	});
+}
+function alertDismissed() {
+    // do something
+}
+</script>
+		
+		<script>
+
+			$(document).ready( function() {
+
+				//Setup the ViewNavigator
+				new SlidingView( 'sidebar', 'body' );
+			} );
+			
+		</script>
+		<style>
+			#sidebar {
+				background-color: #f56052;
+				padding:10px;
+			}
+			#body {
+				background-color: white;
+				padding:10px;
+			}
+
+/*buttons*/			
+			
+/*yellow button*/			
+			#yellow {
+	position: absolute;
+	left: 0%;
+	bottom: 24%;
+	}
+			
+/*blue button*/
+			#blue {
+	position: absolute;
+	right: 4%;
+	bottom: 25%;
+	}
+	
+/*pink button*/
+			#pink {
+	position: absolute;
+	right: 27%;
+	top: 18%;			
+	}
+		
+input[type="text"]{
+    margin:30px 0 0;
+    width: 70%;
+    color:#000000;
+    font-size:12px;
+    font-style:italic;
+    border:1px solid #cccccc;
+    border-right:none;
+    background-color:#ededed;
+    float:left;
+    height:28px;
+    padding-right: 7px;
+    padding-left: 7px;
+    line-height: 28px;
+}
+
+input[type="submit"]{
+    background: url(image/search.png) -99px 0px  no-repeat;
+    width:30px;
+    height:30px;
+    border:none;
+    float:left;
+    margin:30px 0 0;
+    cursor:pointer;
+}
+/*end of buttons*/
+		
+		</style>
+
+	</head>
+	<body>	
+		<div class="slidingview_wrapper">
+			<div id="sidebar">
+<form name="input">
+<input name="keyword" type="text"  placeholder="Search here..."  required >
+<input id="btn_Search" type="submit" value="" />
+</form>
+
+<div id="search-result">
+
+</div>
+
+	</div>
+	<div id="body">
+				<ul id="header">
+			<li><a href ="homepage.html">
+			<img class="logo" src="image/logo.png" alt="dot.dotlogo"></a></li>
+			<li class="name">Favourite</li>
+				
+			<li ><a href="setting.html"><img class="settingbtn2" src="image/settingbtn2.png" alt="Setting" width="30px" height="30px"/></a></li>
+			<li><a href="fav.html"><img class="Favbtn" src="image/1.png" alt="FAV"/></a></li>
+		    </ul>
+		    
+		   
+	<a href ="creditpage.html">
+	<img src="image/creditbtn.png" id="yellow" alt ="yellowbtn" width="50%" height="30%" class="yellow"/>
+</a>
+
+	
+<div>
+	<a href ="help.html">
+	<img src ="image/helpbtn.png" id="blue" alt="bluebtn" width ="48%" height=" 30%"/>	
+</a>
+	
+</div>	
+
+<div>
+	<a href ="feedback.html">
+	<img src ="image/feedbackbtn.png" id="pink" alt="orangebtn" width ="50%" height=" 32%"/>	
+</a>
+	
+</div>	
+		</div>
+		</div>
+		
+
+	 </div>
+	</body>
+</html>

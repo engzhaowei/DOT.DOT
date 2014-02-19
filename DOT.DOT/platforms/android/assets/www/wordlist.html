@@ -1,0 +1,686 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<title>Wordlist</title>
+<head>
+	
+	
+	
+		<link href="layout.css" rel="stylesheet" style="" type="text/css" />
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="jquery-1.3.1.min.js"></script>	
+
+
+  <script type="text/javascript" charset="utf-8" src="cordova-2.1.0.js"></script>
+
+
+		
+
+		<script type="text/javascript" src="iscroll.js"></script>
+
+
+
+    <script>
+     // Wait for Cordova to load
+    // 
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is loaded and it is now safe to make calls Cordova methods
+    //
+    function onDeviceReady() {
+        checkConnection();
+    }
+
+    function checkConnection() {
+        var networkState = navigator.network.connection.type;
+
+        var states = {};
+        states[Connection.NONE]     = 'No network connection';
+ if ((states[networkState]) == states[Connection.NONE]){alert('Dot.Dot.Dot need internet to access. Please Check Your Connection');};
+      
+    }
+
+     
+
+    
+    
+    
+    
+    
+    
+    /************************************audio javascript**********************************/
+        function playAudio(src) {
+            if (device.platform == 'Android') {
+
+            }
+ 
+            var media = new Media(src, success, error_error);
+
+            media.play();
+             my_media.setVolume('10.0');
+        }
+ 
+        function success() {
+            // ignore
+			   media.play();
+        }
+ 
+        function error_error(e) {
+            alert('great error');
+            alert(e.message);
+        }
+        
+    </script>
+
+
+	
+		<script type="text/javascript">
+		
+$(document).ready(function (){
+    initDatabase();
+
+
+
+});
+ 
+ var db = openDatabase("FavouriteDB", "1.0", "FavouriteDB", 200000);  // Open SQLite Database
+ 
+var dataset;
+ 
+var DataType;
+ 
+ function initDatabase()  // Function Call When Page is ready.
+ 
+{
+ 
+    try {
+ 
+        if (!window.openDatabase)  // Check browser is supported SQLite or not.
+ 
+        {
+ 
+            alert('Databases are not supported in this browser.');
+ 
+        }
+ 
+        else {
+ 
+            createTable();  // If supported then call Function for create table in SQLite
+ 
+        }
+ 
+    }
+ 
+    catch (e) {
+ 
+        if (e == 2) {
+ 
+            // Version number mismatch. 
+ 
+            console.log("Invalid database version.");
+ 
+        } else {
+ 
+            console.log("Unknown error " + e + ".");
+ 
+        }
+ 
+        return;
+ 
+    }
+ 
+}
+ 
+function createTable()  // Function for Create Table in SQLite.
+ 
+{
+ 
+    db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS TrainsFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+     db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS BeveragesFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+	 db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS GreetingsFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+     db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS AcroynmFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+	  db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS FoodFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+     db.transaction(function (tx) { tx.executeSql('CREATE TABLE IF NOT EXISTS AttractionsFav (WordID TEXT UNIQUE, Word TEXT, rowIcon TEXT, explanation1 TEXT, image1 TEXT, sub TEXT)'); });
+ 
+} 
+function insertRecord(WordID, Word, rowIcon, explanation1, image1, sub) // Get value from Input and insert record . Function Call when Save/Submit Button Click..
+ 
+{
+
+
+switch(WordID.substring(0,2)){
+
+case 'Ac':
+        db.transaction(function (tx) { 
+		
+		tx.executeSql('INSERT INTO AcroynmFav(WordID, Word, rowIcon,explanation1,image1,sub) VALUES (?, ?, ?, ?, ?, ?)',[WordID, Word, rowIcon, explanation1 , image1, sub], onError); 
+		alert('Word is added to Acroynm favorite list!')
+		}); 
+break;
+
+case 'B0':
+                db.transaction(function (tx) { 
+				tx.executeSql('INSERT INTO BeveragesFav(WordID, Word, rowIcon,explanation1,image1,sub) VALUES (?, ?, ?, ?, ?, ?)',[WordID, Word, rowIcon, explanation1 , image1, sub], onError); 
+					alert('Word is added to Beverages favorite list!')
+				});
+break;
+
+case 'F0':
+        db.transaction(function (tx) { 
+		tx.executeSql('INSERT INTO FoodFav(WordID, Word, rowIcon,explanation1,image1,sub) VALUES (?, ?, ?, ?, ?, ?)',[WordID, Word, rowIcon, explanation1 , image1, sub], onError); 
+			alert('Word is added to Food favorite list!')}); 
+break;
+
+case 'A0':
+
+        db.transaction(function (tx) { 
+		tx.executeSql('INSERT INTO AttractionsFav(WordID, Word, rowIcon,explanation1,image1,sub) VALUES (?, ?, ?, ?, ?, ?)',[WordID, Word, rowIcon, explanation1 , image1, sub], onError); 
+			alert('Word is added to Attractions favorite list!')}); 
+break;
+
+case 'G0':
+        db.transaction(function (tx) { 
+		tx.executeSql('INSERT INTO GreetingsFav(WordID, Word, rowIcon,explanation1,image1,sub) VALUES (?, ?, ?, ?, ?, ?)',[WordID, Word, rowIcon, explanation1 , image1, sub], onError); 
+			alert('Word is added to Greetings favorite list!')}); 
+break;
+
+case 'T0':
+        db.transaction(function (tx) { 
+		tx.executeSql('INSERT INTO TrainsFav(WordID, Word, rowIcon,explanation1,image1,sub) VALUES (?, ?, ?, ?, ?, ?)',[WordID, Word, rowIcon, explanation1 , image1, sub], onError); 
+			alert('Word is added to Trains favorite list!')}); 
+
+break;
+default:
+  alert('Fail to add to favourite');
+  break;
+}
+
+}
+ 
+  
+function deleteRecord(WordID) // Get id of record . Function Call when Delete Button Click..
+ 
+{
+ 
+  
+ if(  (WordID.substring(0,1))=='B'    ){
+        db.transaction(function (tx) { tx.executeSql(deleteStatementBeverages, [WordID],onError); });
+ }
+ if(  (WordID.substring(0,1))=='F'    ){
+        db.transaction(function (tx) { tx.executeSql(deleteStatementFood, [WordID],onError); });
+ }
+  if(  (WordID.substring(0,1))=='A'    ){
+        db.transaction(function (tx) { tx.executeSql(deleteStatementAttractions, [WordID],onError); });
+ }
+   if(  (WordID.substring(0,2))=='Ac'    ){
+        db.transaction(function (tx) { tx.executeSql(deleteStatementAcroynm, [WordID],onError); });
+ }
+  if(  (WordID.substring(0,1))=='G'    ){
+        db.transaction(function (tx) { tx.executeSql(deleteStatementGreetings, [WordID],onError); });
+ }
+  if(  (WordID.substring(0,1))=='T'    ){
+        db.transaction(function (tx) { tx.executeSql(deleteStatementTrains, [WordID],onError); });
+ }
+   
+ 
+ 
+}
+ 
+
+ 
+function loadRecord(i) // Function for display records which are retrived from database.
+ 
+{
+ 
+    var item = dataset.item(i);
+
+ 
+        var WordID=(item.WordID);
+ var Word=(item.Word);
+ var rowIcon=(item.rowIcon);
+ var explanation1=(item.explanation1);
+ var image1=(item.image1);
+ var sub=(item.sub);
+ 
+}
+ 
+ 
+function onError(tx, error) // Function for Hendeling Error...
+ 
+{
+ 
+   // alert(error.message);
+ 
+}
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('wrapper');
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+/* * * * * * * *
+ *
+ * Use this for high compatibility (iDevice + Android)
+ *
+ */
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+/*
+ * * * * * * * */
+
+
+/* * * * * * * *
+ *
+ * Use this for iDevice only
+ *
+ */
+//document.addEventListener('DOMContentLoaded', loaded, false);
+/*
+ * * * * * * * */
+
+
+/* * * * * * * *
+ *
+ * Use this if nothing else works
+ *
+ */
+//window.addEventListener('load', setTimeout(function () { loaded(); }, 200), false);
+/*
+ * * * * * * * */
+
+		
+/*sliding*/
+$(document).ready(function(){
+  $(".flip").click(function(){
+    $(".panel").slideToggle("slow");
+     return false;
+  });
+  
+  
+});
+/*end of sliding */
+
+
+
+
+
+
+
+function parseXml(xml)
+{
+
+
+	$(".myTable").empty();
+  //find every words and print the word
+  $(xml).find("Words").each(function()
+  {
+var word= $(this).find("Word").text();
+var explanation1 = $(this).find("Explanation1").text();
+var wordid= $(this).find("WordID").text();
+var rowIcon=$(this).find("icon").text();
+var sub=$(this).find("SubCatg").text();
+var image1=$(this).find("image1").text();
+var sound=$(this).find("PronouciationClip").text();
+
+
+
+  	      $(".myTable").append('<tr><td><img src="' +rowIcon+'" title="'+sub+'" height="68" width="66" /></td><td class="setFixwidth"><div class="flip'+wordid+'">'+word+ '</div></td><td><button onclick="playAudio(&#39;'+sound+'&#39;)"><img src="image/11.png"/></button></td><td><button onclick="insertRecord(&#39;'+wordid+'&#39; , &#39;'+word+'&#39; , &#39;'+rowIcon+'&#39; , &#39;'+explanation1+'&#39; , &#39;'+image1+'&#39; , &#39;'+sub+'&#39;)"><img src="image/1.png" /></button></td></tr>');
+         $(".myTable").append('<tr><td colspan="4"><div class="panel'+wordid+'"><p>'+explanation1+'<br/><br/><img src="image/sharebtn.png" /><img src="image/copybtn.png" /></p></td></tr></table>');
+         	$(".myTable").append('<script>$(".flip'+ wordid +'").click(function(){'+'$(".panel'+ wordid +'").slideToggle("slow",function(){;myScroll.refresh();})});'+'</'+'script>');
+	$(".myTable").append('<style> .panel'+ wordid +',.flip'+ wordid + '{text-align:center; position:relative;} .panel'+wordid+'{display:none; position:relative;} .panel'+wordid+' img{float: left; padding-left:10px;}</style>');
+
+  });
+  
+   myScroll.refresh();
+   myScroll.scrollTo(0, 0, 200,false);
+}
+
+
+$(document).ready(function() {	
+$('.greetings').eq(0).click(function(){
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/lgmo6idak548q5f/Greetings.xml",
+    dataType: "xml",
+    success: parseXml
+  });
+  
+ myScroll.refresh();
+});
+
+$('.train').eq(0).click(function(){
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/3avubz6hal707ky/Trains.xml",
+    dataType: "xml",
+    success: parseXml
+  });
+	
+
+});
+
+$('.food').eq(0).click(function(){
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/zkvlym6ia0hvvbb/Food.xml",
+    dataType: "xml",
+    success: parseXml
+  });
+	 
+
+});
+
+$('.attractions').eq(0).click(function(){
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/6fom96k966t5vqp/Attractions.xml",
+    dataType: "xml",
+    success: parseXml
+  });
+
+});
+$('.acronyms').eq(0).click(function(){
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/44g39iy23dp4ecd/Acronym.xml",
+    dataType: "xml",
+    success: parseXml
+  });
+
+});
+$('.beverages').eq(0).click(function(){
+  $.ajax({
+    type: "GET",
+    url: "https://dl.dropboxusercontent.com/s/wq4sopbrtiq2j0w/Beverages.xml",
+    dataType: "xml",
+    success: parseXml
+  });
+
+});
+
+
+
+	 
+
+
+
+  //Get all the LI from the #tabMenu UL
+  $('#tabMenu li').click(function(){
+    
+    //perform the actions when it's not selected
+    if (!$(this).hasClass('selected')) {    
+           
+	    //remove the selected class from all LI    
+	    $('#tabMenu li').removeClass('selected');
+	    
+	    //Reassign the LI
+	    $(this).addClass('selected');
+	    
+	    //Hide all the DIV in .boxBody
+	    $('.boxBody div.parent').slideUp('1500');
+	    
+	    //Look for the right DIV in boxBody according to the Navigation UL index, therefore, the arrangement is very important.
+	    $('.boxBody div.parent:eq(' + $('#tabMenu > li').index(this) + ')').slideDown('1500');
+	    
+	 }
+    
+  }).mouseover(function() {
+
+    //Add and remove class, Personally I dont think this is the right way to do it, anyone please suggest    
+    $(this).addClass('mouseover');
+    $(this).removeClass('mouseout');   
+    
+  }).mouseout(function() {
+    
+    //Add and remove class
+    $(this).addClass('mouseout');
+    $(this).removeClass('mouseover');    
+    
+  });
+
+	//Mouseover with animate Effect for Category menu list
+  $('.boxBody #category li').click(function(){
+
+    //Get the Anchor tag href under the LI
+    window.location = $(this).children().attr('href');
+  }).mouseover(function() {
+
+    //Change background color and animate the padding
+    $(this).css('backgroundColor','#888');
+    $(this).children().animate({paddingLeft:"20px"}, {queue:false, duration:300});
+  }).mouseout(function() {
+    
+    //Change background color and animate the padding
+    $(this).css('backgroundColor','');
+    $(this).children().animate({paddingLeft:"0"}, {queue:false, duration:300});
+  });  
+	
+	//Mouseover effect for Posts, Comments, Famous Posts and Random Posts menu list.
+  $('#.boxBody li').click(function(){
+    window.location = $(this).children().attr('href');
+  }).mouseover(function() {
+    $(this).css('backgroundColor','	');
+  }).mouseout(function() {
+    $(this).css('backgroundColor','');
+  });  	
+	        $('#tabMenu li').eq(window.location.search.substr(1)).click();
+});
+
+
+
+
+
+
+</script>
+
+
+
+
+<style>
+img[src=" "] {
+  width:50%;
+  height:50%;
+  
+}
+
+
+
+
+
+
+
+
+
+table
+{
+position:static;
+width: 100%;
+
+
+}
+
+table, tr
+{
+
+width: 100%;
+height: 30px;
+font-size:0.9em;
+font-family:"Myriad Pro";
+
+
+
+}
+
+table, td{ padding-left: 1%;
+}
+
+
+body{color:black;	-webkit-user-select:none;
+    -webkit-text-size-adjust:none;background-color:white;}
+a {color:black;text-decoration:none;}
+a:hover {color:black;text-decoration:none;}
+
+#tabMenu {list-style:none; height:50%;width:155%; padding: 5% 0 0 1%; clear:both;}
+#tabMenu li {float:left; height:70px;width:55px;cursor:hand}
+
+
+li.greetings {background:url(image/greetings.png) no-repeat 0 15px; background-size: 110% 80%;}
+li.acronyms {background:url(image/acronym.png) no-repeat 0 15px; background-size:110% 80%; }
+li.beverages {background:url(image/beverages.png) no-repeat 0 15px; background-size:110% 80%;}
+li.food {background:url(image/food.png) no-repeat 0 15px; background-size:105% 80%;}
+li.train {background:url(image/trains.png) no-repeat 0 15px; background-size:110% 80%;}
+li.attractions {background:url(image/attractions.png) no-repeat 0 15px; background-size:110% 80%;}
+/*
+li.greetings.mouseover {background:url(image/Greeting1.png) no-repeat 0 1px; background-size: 110% 100%;}
+li.acronyms.mouseover {background:url(image/Acronym1.png) no-repeat 0 1px; background-size:110% 100%;}
+li.beverages.mouseover {background:url(image/Beverages1.png) no-repeat 0 1px; background-size:110% 100%;}
+li.food.mouseover {background:url(image/Food1.png) no-repeat 0 1px; background-size:105% 100%;}
+li.train.mouseover {background:url(image/MRT1.png) no-repeat 0 1px; background-size:110% 100%;}
+li.attractions.mouseover {background:url(image/Attractions1.png) no-repeat 0 1px; background-size:110% 100%;}
+*/
+/*li.mouseout {background-position:-20% 0 0 0;}*/
+
+li.greetings.selected {background:url(image/Greeting1.png) no-repeat 0 1px; background-size:110% 100%;}
+li.acronyms.selected {background:url(image/Acronym1.png) no-repeat 0 1px; background-size:110% 100%;}
+li.beverages.selected {background:url(image/beverages1.png) no-repeat 0 1px;  background-size:110% 100%;}
+li.food.selected {background:url(image/food1.png) no-repeat 0 1px;  background-size:105% 100%;}
+li.train.selected {background:url(image/mrt1.png) no-repeat 0 1px; background-size:110% 100%;}
+li.attractions.selected {background:url(image/attractions1.png) no-repeat 0 1px; background-size:110% 100%;}
+
+
+
+.box {
+	width:100%;  
+
+    transition-duration: 1s;
+    transition-timing-function: linear
+    }
+    
+.boxBody { background-color:white; overflow-x: hidden;}
+
+
+.boxBody div.parent {display:none; padding-right: 10%;}
+.boxBody div.show {display:block;
+					
+					}
+
+
+
+.boxBody div li span {font-size:8px;font-style:italic; color:#888;}
+
+#wrapper {
+	position:absolute; z-index:1;
+	top:175px; bottom:0px; left:0;
+	width:100%;
+	overflow-x:hidden;
+}
+
+#scroller {
+	position:absolute; z-index:1;
+/*	-webkit-touch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	width:100%;
+	padding:0;
+}
+
+
+</style>
+</head>
+
+<body>
+
+	</div>
+			<div id="body">
+			<ul id="header">
+			<li><a href ="homepage.html">
+			<img class="logo" src="image/logo.png" alt="dot.dotlogo"></a></li>
+			<li class="name">Wordlist</li>
+			
+			<li><a href="setting.html"><img class="settingbtn" src="image/settingbtn.png" alt="Setting" width="30px" height="30px"/></a></li>
+			<li><a href="fav.html"><img class="Favbtn" src="image/1.png" alt="FAV"/></a></li>
+		    </ul>
+		   
+
+			
+
+<div class="box">
+	
+<ul id="tabMenu">
+  <li class="greetings"> </li>
+  <li class="acronyms"> </li>
+  <li class="beverages"> </li>
+  <li class="food"> </li>
+  <li class="train"> </li>
+  <li class="attractions"> </li>
+</ul>
+
+
+
+<div class="boxBody" >
+<div id="wrapper">	
+  	<div id="scroller">
+  <div id="greetings" class="show parent">
+  
+  <table class="myTable">
+
+</table>
+
+
+
+  </div>  
+
+  
+  <div id="acronyms" class="parent">
+  <table class="myTable">
+
+</table>
+
+  </div>
+  
+  
+  <div id="beverages" class="parent">
+  <table class="myTable">
+
+</table>
+
+  </div>
+  
+  
+  <div id="food" class="parent">
+    	<table class="myTable">
+
+</table>
+
+  </div>
+  
+  <div id="train" class="parent">
+  <table class="myTable">
+
+</table>
+  </div>        
+
+
+  <div id="attractions" class="parent">
+
+  <table class="myTable">
+</table>
+
+
+  </div>
+  
+  
+  </div>         
+</div> 
+</div>
+
+
+</div>
+
+
+ </div>
+</body>
+
+</html>
+
